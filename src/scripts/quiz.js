@@ -94,11 +94,15 @@ function calculateAvgAge(people) {
 function calculateAvgAge2(people) {
     const ages = people.map((person) => person.age);
     return ages.reduce((acc, age) => acc + age) / people.length
-
 }
 
-// const result = calculateAvgAge2(data);
+const cb = (acc, person) => acc + person.age;
+const initial = 0;
+const calculateAvgAge3 = (people) => people.reduce(cb, initial) / people.length;
+
+// const result = calculateAvgAge3(data);
 // console.log(result);
+
 
 // policz średnią wieku ludzi z warszawy
 
@@ -144,57 +148,93 @@ const avgAgeWarsaw4 = (items) => items
 // const r = avgAgeWarsaw3(data);
 // console.log(r);
 
-// czy wszyscy kochaja js
+// czy wszyscy kochają js
 
 
 function isAllLoveJs(elements) {
-    for (let i = 0; i < elements.length; i++) {
-        if (!elements[i].hobbies.includes('js')) { // sprawdza czy w tablicy instenieje element; jest to metoda - wywyłujemy nawiasami ()
-            return false;
 
+    for (let i = 0; i < elements.length; i++) {
+        if (!elements[i].hobbies.includes('js')) {
+            return false;
         }
     }
+
     return true;
+
 }
 
-// data.every ((age) => age % 2 === 0);
+const isAllLoveJs2 = (elements) => elements.every((element) => element.hobbies.includes('js'))
 
-const  isAllLoveJs2 = (elements) => elements.every((element) => element.hobbies.includes('js'));
+function isAllLoveJs3(elements) {
+    return elements.every((element) => element.hobbies.includes('js'))
+}
 
 
 // const res = isAllLoveJs2(data);
 // console.log(res);
 
-//sprawdz czy kto kolwiek kocha phyton
 
-function isAnybodyLovePython (items) {
-    for (let i = 0; i < items.length; i++){
-        if (!items[i].hobbies.includes('python')){
+// sprawdź, czy ktokolwiek kocha python
+
+function isAnybodyLovePython(items) {
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].hobbies.includes('python')) {
             return true;
         }
     }
+
     return false;
 }
 
+const isAnybodyLovePython2 = (elements) => elements.some((element) => element.hobbies.includes('python'))
 
-// const result = isAnybodyLovePython (data);
-// console.log(result);
 
-const isAnybodyLovePython2 = (elements) => elements.some((element) => element.hobbies.includes('python'));
+// function isAnybodyLovePython3(elements){
+//     return elements.some((element) => element.hobbies.includes('python'))
+// }
 
 // const result = isAnybodyLovePython2(data);
 // console.log(result);
 
-//czy ktoś z poza warszawy ma więcej niz 30 lat
+// czy ktoś spoza warszawy ma więcej niż 30 lat
 
-function isOlderThan30 (people){
+function isOlderThan30(people) {
     for (const person of people) {
-        if (!["warsaw", "warszawa"].includes(person.city) && person.city >30){
+        // (!(a || b) && c)
+        // (!(1 || 0) && 1) => F
+        if (!('warsaw' === person.city || 'warszawa' === person.city) && person.age > 30) {
             return true;
         }
     }
+
     return false;
 }
 
-const res = isOlderThan30 (data);
-console.log(res);
+const isOlderThan302 = (people) => people
+    .some((person) => !('warsaw' === person.city || 'warszawa' === person.city) && person.age > 30);
+
+// const res = isOlderThan30(data)
+// console.log(res);
+
+// policz ile jest unikalnych hobbies
+
+const countHobbies = (people) => {
+    const hobbies = [];
+
+    for (const person of people) {
+        for (const hobby of person.hobbies) {
+            if (!hobbies.includes(hobby)) {
+                hobbies.push(hobby);
+            }
+        }
+    }
+
+    return hobbies.length;
+}
+
+const countHobbies2 = (items) => new Set(
+    items.flatMap((item) => item.hobbies)
+).size;
+
+const r = countHobbies2(data);
+console.log(r);
