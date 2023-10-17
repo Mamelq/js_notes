@@ -7,7 +7,7 @@ const data = [
     },
     {
         name: 'pawel',
-        cite: 'Wroclaw',
+        city: 'Wroclaw',
         age: 37,
         hobbies: ['js', 'drugs', 'eat']
     },
@@ -64,20 +64,137 @@ const data = [
         city: 'warszawa',
         age: 29,
         hobbies: ['programowanie', 'sport']
+    },
+    {
+        name: 'dominika',
+        city: 'warszawa',
+        age: 40,
+        hobbies: ['cycling', 'dreaming', 'car driving']
     }
 ]
 
-//console.log(data.length);
+// console.log(data.length);
 
- let sum = 0;
-// for (let i = 0; i < data.length; i++){
-//     sum += data[i].age
-// }
+// policz średnią wieku
 
-// for (const person of data){
-//     sum += person.age
-// }
-//
-// console.log(sum / data.length)
+function calculateAvgAge(people) {
+    let sum = 0;
 
-console.log(data.reduce((acc, ce) => acc +ce.age, 0) / data.length)
+    // for (let i = 0; i < people.length; i++) {
+    //     sum += people[i].age
+    // }
+
+    for (const person of people) {
+        sum += person.age;
+    }
+
+    return sum / people.length;
+}
+
+function calculateAvgAge2(people) {
+    const ages = people.map((person) => person.age);
+    return ages.reduce((acc, age) => acc + age) / people.length
+
+}
+
+// const result = calculateAvgAge2(data);
+// console.log(result);
+
+// policz średnią wieku ludzi z warszawy
+
+function avgAgeWarsaw(items) {
+    let sum = 0;
+    let counter = 0;
+
+    for (const item of items) {
+        if (["warszawa", "warsaw"].includes(item.city.toLowerCase())) {
+            sum += item.age;
+            counter++;
+        }
+    }
+
+    return sum / counter;
+}
+
+const avgAgeWarsaw2 = (items) => {
+    // filtrowanie (usuwanie niepotrzebnych)
+    const warsawItems = items.filter((item) => ["warszawa", "warsaw"].includes(item.city.toLowerCase()));
+    // transformacje danych
+    const ages = warsawItems.map((item) => item.age);
+    // agregacja (sumowanie)
+    return ages.reduce((acc, age) => acc + age) / ages.length;
+}
+
+const avgAgeWarsaw3 = (items) => {
+    const ages = items
+        .filter((item) => ["warszawa", "warsaw"].includes(item.city.toLowerCase()))
+        .map((item) => item.age)
+
+    return ages.reduce((acc, age) => acc + age) / ages.length;
+}
+
+
+// nie potrzebnie robiony 2x filter, kosztowne i nieczytelne
+const avgAgeWarsaw4 = (items) => items
+    .filter((item) => ["warszawa", "warsaw"].includes(item.city.toLowerCase()))
+    .map((item) => item.age)
+    .reduce((acc, age) => acc + age) / items.filter((item) => ["warszawa", "warsaw"].includes(item.city.toLowerCase()));
+
+
+// const r = avgAgeWarsaw3(data);
+// console.log(r);
+
+// czy wszyscy kochaja js
+
+
+function isAllLoveJs(elements) {
+    for (let i = 0; i < elements.length; i++) {
+        if (!elements[i].hobbies.includes('js')) { // sprawdza czy w tablicy instenieje element; jest to metoda - wywyłujemy nawiasami ()
+            return false;
+
+        }
+    }
+    return true;
+}
+
+// data.every ((age) => age % 2 === 0);
+
+const  isAllLoveJs2 = (elements) => elements.every((element) => element.hobbies.includes('js'));
+
+
+// const res = isAllLoveJs2(data);
+// console.log(res);
+
+//sprawdz czy kto kolwiek kocha phyton
+
+function isAnybodyLovePython (items) {
+    for (let i = 0; i < items.length; i++){
+        if (!items[i].hobbies.includes('python')){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+// const result = isAnybodyLovePython (data);
+// console.log(result);
+
+const isAnybodyLovePython2 = (elements) => elements.some((element) => element.hobbies.includes('python'));
+
+// const result = isAnybodyLovePython2(data);
+// console.log(result);
+
+//czy ktoś z poza warszawy ma więcej niz 30 lat
+
+function isOlderThan30 (people){
+    for (const person of people) {
+        if (!["warsaw", "warszawa"].includes(person.city) && person.city >30){
+            return true;
+        }
+    }
+    return false;
+}
+
+const res = isOlderThan30 (data);
+console.log(res);
