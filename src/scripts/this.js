@@ -96,7 +96,6 @@ Array.prototype.myMap = function (fn) {
 
 
 
-Message js-fun
 
 
 
